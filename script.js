@@ -6,49 +6,50 @@ const quotes = [
 ];
 
 
-const quoteDisplay = document.getElementById('quoteDisplay');
-const newQuoteBtn = document.getElementById('newQuoteBtn');
-const addQuoteBtn = document.getElementById('addQuoteBtn');
-const quoteTextInput = document.getElementById('quoteText');
-const quoteCategoryInput = document.getElementById('quoteCategory');
+function showRandomQuote() {
+    const quoteDisplay = document.getElementById('quoteDisplay');
+    if (!quoteDisplay) {
+        console.error("Error: #quoteDisplay not found!");
+        return;
+    }
 
-
-function displayRandomQuote() {
     if (quotes.length === 0) {
-        quoteDisplay.innerHTML = "<p>No quotes available. Please add some quotes.</p>";
+        quoteDisplay.textContent = "No quotes available. Add some!";
         return;
     }
 
     const randomIndex = Math.floor(Math.random() * quotes.length);
-    const randomQuote = quotes[randomIndex];
-    
-    quoteDisplay.innerHTML = `
-        <blockquote>"${randomQuote.text}"</blockquote>
-        <p><em>— ${randomQuote.category}</em></p>
-    `;
+    const { text, category } = quotes[randomIndex];
+    quoteDisplay.innerHTML = `<blockquote>"${text}"</blockquote><p><em>— ${category}</em></p>`;
 }
 
 
 function addQuote() {
-    const text = quoteTextInput.value.trim();
-    const category = quoteCategoryInput.value.trim();
+    const textInput = document.getElementById('newQuoteText');
+    const categoryInput = document.getElementById('newQuoteCategory');
+
+    if (!textInput || !categoryInput) {
+        console.error("Error: Input fields not found!");
+        return;
+    }
+
+    const text = textInput.value.trim();
+    const category = categoryInput.value.trim();
 
     if (!text || !category) {
-        alert('Please fill in both fields');
+        alert("Please fill in both fields!");
         return;
     }
 
     quotes.push({ text, category });
-    quoteTextInput.value = '';
-    quoteCategoryInput.value = '';
-    
-    displayRandomQuote();
-    alert('Quote added successfully!');
+    textInput.value = "";
+    categoryInput.value = "";
+    showRandomQuote(); 
+    alert("Quote added successfully!");
 }
 
 
-newQuoteBtn.addEventListener('click', displayRandomQuote);
-addQuoteBtn.addEventListener('click', addQuote);
+document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 
 
-displayRandomQuote();
+window.addEventListener('DOMContentLoaded', showRandomQuote);
