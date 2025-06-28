@@ -27,37 +27,23 @@
             cursor: pointer;
             margin: 5px;
         }
-        button:hover {
-            background-color: #45a049;
-        }
         input {
             padding: 8px;
             margin: 5px;
             width: 300px;
         }
-        .category-filter {
-            margin: 15px 0;
-        }
     </style>
 </head>
 <body>
     <h1>Dynamic Quote Generator</h1>
-    
-    <div class="category-filter">
-        <label for="categorySelect">Filter by category:</label>
-        <select id="categorySelect">
-            <option value="all">All Categories</option>
-        </select>
-    </div>
-    
     <div id="quoteDisplay"></div>
     <button id="newQuote">Show New Quote</button>
     
-    <div id="addQuoteForm" style="margin-top: 30px;">
+    <div style="margin-top: 30px;">
         <h3>Add New Quote</h3>
-        <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-        <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-        <button onclick="addQuote()">Add Quote</button>
+        <input id="newQuoteText" type="text" placeholder="Enter a new quote">
+        <input id="newQuoteCategory" type="text" placeholder="Enter quote category">
+        <button id="addQuoteBtn">Add Quote</button>
     </div>
     
     <script src="script.js"></script>

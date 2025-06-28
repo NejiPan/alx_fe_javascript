@@ -1,38 +1,23 @@
-let quotes = [
+const quotes = [
     { text: "The only way to do great work is to love what you do.", category: "inspiration" },
     { text: "Innovation distinguishes between a leader and a follower.", category: "business" },
-    { text: "Your time is limited, don't waste it living someone else's life.", category: "life" },
-    { text: "Stay hungry, stay foolish.", category: "inspiration" },
-    { text: "The journey of a thousand miles begins with one step.", category: "life" }
+    { text: "Your time is limited, don't waste it living someone else's life.", category: "life" }
 ];
 
 const quoteDisplay = document.getElementById('quoteDisplay');
 const newQuoteBtn = document.getElementById('newQuote');
-const categorySelect = document.getElementById('categorySelect');
+const addQuoteBtn = document.getElementById('addQuoteBtn');
 const newQuoteText = document.getElementById('newQuoteText');
 const newQuoteCategory = document.getElementById('newQuoteCategory');
 
-function init() {
-    newQuoteBtn.addEventListener('click', showRandomQuote);
-    updateCategoryFilter();
-    showRandomQuote();
-}
-
-function showRandomQuote() {
-    const selectedCategory = categorySelect.value;
-    let filteredQuotes = quotes;
-    
-    if (selectedCategory !== 'all') {
-        filteredQuotes = quotes.filter(quote => quote.category === selectedCategory);
-    }
-    
-    if (filteredQuotes.length === 0) {
-        quoteDisplay.innerHTML = `<p>No quotes found in the selected category.</p>`;
+function displayRandomQuote() {
+    if (quotes.length === 0) {
+        quoteDisplay.innerHTML = "<p>No quotes available. Please add some quotes.</p>";
         return;
     }
-    
-    const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
-    const randomQuote = filteredQuotes[randomIndex];
+
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const randomQuote = quotes[randomIndex];
     
     quoteDisplay.innerHTML = `
         <blockquote>"${randomQuote.text}"</blockquote>
@@ -43,39 +28,21 @@ function showRandomQuote() {
 function addQuote() {
     const text = newQuoteText.value.trim();
     const category = newQuoteCategory.value.trim();
-    
+
     if (!text || !category) {
         alert('Please enter both quote text and category');
         return;
     }
-    
-    const newQuote = { text, category };
-    quotes.push(newQuote);
-    
+
+    quotes.push({ text, category });
     newQuoteText.value = '';
     newQuoteCategory.value = '';
     
-    updateCategoryFilter();
-    showRandomQuote();
+    displayRandomQuote();
     alert('Quote added successfully!');
 }
 
-function updateCategoryFilter() {
-    const categories = [...new Set(quotes.map(quote => quote.category))];
-    const currentSelection = categorySelect.value;
-    
-    categorySelect.innerHTML = '<option value="all">All Categories</option>';
-    
-    categories.forEach(category => {
-        const option = document.createElement('option');
-        option.value = category;
-        option.textContent = category;
-        categorySelect.appendChild(option);
-    });
-    
-    if (categories.includes(currentSelection)) {
-        categorySelect.value = currentSelection;
-    }
-}
+newQuoteBtn.addEventListener('click', displayRandomQuote);
+addQuoteBtn.addEventListener('click', addQuote);
 
-document.addEventListener('DOMContentLoaded', init);
+displayRandomQuote();
